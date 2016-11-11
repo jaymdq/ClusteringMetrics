@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -257,8 +256,7 @@ public class ClusterEvaluation {
 		for (HashSet<Integer> iclass : classes.values()) {
 			for (HashSet<Integer> icluster : clusters.values()) {
 				Double intersect = (double) getIntersect(icluster, iclass);
-				sumaClase+= intersect;
-				//sumaCluster += choose(icluster.size(),2).doubleValue();				
+				sumaClase+= intersect;				
 			}
 			double sumaClaseTomadoDeADos = choose(sumaClase.intValue(),2).doubleValue();
 			part3+= sumaClaseTomadoDeADos;
