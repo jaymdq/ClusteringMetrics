@@ -83,11 +83,24 @@ public class ClusterEvaluation {
 		for (Entry<String, HashSet<Integer>> cluster : clustersCorrecto.entrySet())
 			System.out.println("\t" + cluster.getKey() + ": "
 					+ cluster.getValue().size());
-		System.out.println("\n--------Classes--------");
-		for (Entry<String, HashSet<Integer>> cl : classes.entrySet())
-			System.out
-			.println("\t" + cl.getKey() + ": " + cl.getValue().size());
 
+		System.out.println();
+		// Tablita
+		System.out.print("Clase\t");
+		for (Entry<String, HashSet<Integer>> cluster : clusters.entrySet()){
+			System.out.print(cluster.getKey() + "\t");
+		}
+		System.out.println();
+		
+		for (Entry<String, HashSet<Integer>> cl : classes.entrySet()){
+			System.out.print(cl.getKey().substring(0, 3) + "\t");		
+			for (Entry<String, HashSet<Integer>> cluster : clusters.entrySet()){
+				System.out.print(getIntersect(cluster.getValue(),cl.getValue()) + "\t\t");
+			}
+			System.out.println();
+		}
+
+		
 	}
 
 	private int getIntersect(HashSet<Integer> a, HashSet<Integer> b) {
@@ -292,9 +305,12 @@ public class ClusterEvaluation {
 	
 	
 	public static void main(String[] args) throws Exception {
-		ClusterEvaluation evaluation = new ClusterEvaluation("C:\\Users\\Diego\\Desktop\\Cluster.arff");
+		ClusterEvaluation evaluation = new ClusterEvaluation("resources\\Cluster.arff");
 
 		System.out.println();
+		System.out.println("Métricas---------------------------------------------------");
+		System.out.println();
+		
 		System.out.println("Entropy =\t\t[" + evaluation.getEntropy() + "]"); 						// Correcto anda bien
 		System.out.println("Purity =\t\t[" + evaluation.getPurity() + "]"); 						// Correcto anda bien
 		System.out.println("F-Measure =\t\t[" + evaluation.getFmeasure() + "]");					// Correcto anda bien
