@@ -1,0 +1,24 @@
+@relation clusterinzacionResponsabilidades_clustered
+
+@attribute responsibility string
+@attribute component {vendor,system,verification_subsystem}
+
+@data
+'verify invalid lead',vendor
+'submit credit validation record',vendor
+'supply lead data',system
+'supply score',system
+'validate lead',system
+'insert lead',system
+'process lead',system
+'set manual verification',system
+'compile contact information',system
+'compile academic scoring information',system
+'return lead',system
+'score part of the lead',system
+'verify users authentication',verification_subsystem
+'verify users rights',verification_subsystem
+'make parameter update',system
+'store lead',system
+'assign lead',system
+'receive period list',system

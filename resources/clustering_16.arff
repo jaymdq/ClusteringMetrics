@@ -1,0 +1,18 @@
+@relation clusterinzacionResponsabilidades_clustered
+
+@attribute responsibility string
+@attribute component {sensor,pump,evacuation_alarm,control_system}
+
+@data
+'monitor water level',sensor
+'measure maximum acceptable level of flooding',sensor
+'measure minimum acceptable level of flooding',sensor
+'trigger evacuation alarm',evacuation_alarm
+'start mine pump',pump
+'stop mine pump',pump
+'switch off mine pump',pump
+'login system',control_system
+'verify security credential',control_system
+'override automatic behaviour',control_system
+'re-establish automatic behaviour',control_system
+'reset pump system',control_system

@@ -16,11 +16,4 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-  	<dependency>
-  		<groupId>nz.ac.waikato.cms.weka</groupId>
-  		<artifactId>weka-stable</artifactId>
-  		<version>3.6.11</version>
-  	</dependency>
-  </dependencies>
 </project>

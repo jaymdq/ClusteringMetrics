@@ -1,0 +1,20 @@
+@relation clusterinzacionResponsabilidades_clustered
+
+@attribute Instance_number numeric
+@attribute responsibility string
+@attribute component {sensor,pump,evacuation_alarm,control_system}
+@attribute Cluster {cluster_1}
+
+@data
+0,'monitor water level',sensor,cluster_1
+1,'measure maximum acceptable level of flooding',sensor,cluster_1
+2,'measure minimum acceptable level of flooding',sensor,cluster_1
+3,'trigger evacuation alarm',evacuation_alarm,cluster_1
+4,'start mine pump',pump,cluster_1
+5,'stop mine pump',pump,cluster_1
+6,'switch off mine pump',pump,cluster_1
+7,'login system',control_system,cluster_1
+8,'verify security credential',control_system,cluster_1
+9,'override automatic behaviour',control_system,cluster_1
+10,'re-establish automatic behaviour',control_system,cluster_1
+11,'reset pump system',control_system,cluster_1

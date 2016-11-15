@@ -1,0 +1,25 @@
+@relation clusterinzacionResponsabilidades_clustered
+
+@attribute responsibility string
+@attribute component {server, client}
+
+@data
+'register for course',client
+'view report cards',client
+'access system',client
+'access system',client
+'access system',client
+'access system',client
+'request course catalogue',client
+'make informed decision',server
+'select course offering',client
+'indicate alternative choice',client
+'change schedule',client
+'add course',client
+'drop course',client
+'send information',server
+'submit schedule',client
+'view electronic report card',client
+'record grade',client
+'teach course',server
+'see students signed up',client

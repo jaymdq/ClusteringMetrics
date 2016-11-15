@@ -1,1 +1,5 @@
+HierarchicalClusterer
 weka.clusterers.FilteredClusterer -F "weka.filters.unsupervised.attribute.StringToWordVector -R first-last -W 100000 -prune-rate -1.0 -C -T -I -N 1 -L -stemmer weka.core.stemmers.NullStemmer -stopwords-handler weka.core.stopwords.Null -M 1 -tokenizer \"weka.core.tokenizers.WordTokenizer -delimiters \\\" \\\\r\\\\n\\\\t.,;:\\\\\\\'\\\\\\\"()?!\\\"\"" -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A "weka.core.EuclideanDistance -R first-last"
+
+Xmeans
+weka.clusterers.FilteredClusterer -F "weka.filters.unsupervised.attribute.StringToWordVector -R first-last -W 100000 -prune-rate -1.0 -C -T -I -N 1 -L -stemmer weka.core.stemmers.NullStemmer -stopwords-handler weka.core.stopwords.Null -M 1 -tokenizer \"weka.core.tokenizers.WordTokenizer -delimiters \\\" \\\\r\\\\n\\\\t.,;:\\\\\\\'\\\\\\\"()?!\\\"\"" -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 2 -H 4 -B 1.0 -C 0.5 -D "weka.core.EuclideanDistance -R first-last" -S 10

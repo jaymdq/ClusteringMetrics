@@ -3,14 +3,18 @@ import java.io.FileReader;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
 import java.util.Vector;
 
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import java.util.Map.Entry;
+
+
 public class ClusterEvaluation {
+
+	// Variables
 
 	HashMap<String, HashSet<Integer>> classes;
 	HashMap<String, HashSet<Integer>> clusters;
@@ -21,13 +25,13 @@ public class ClusterEvaluation {
 	HashMap<String, HashSet<Integer>> clustersCorrecto;
 	Vector<Integer> elements = new Vector<Integer>();
 
+	// Constructors
+
 	public ClusterEvaluation(String datasetPath) throws Exception {
 
-		// Variables locales
 		this.classes = new HashMap<String, HashSet<Integer>>();
 		this.clusters = new HashMap<String, HashSet<Integer>>();
 		this.clustersCorrecto = new HashMap<String, HashSet<Integer>>();
-
 
 		// Se lee el arff
 		BufferedReader reader = new BufferedReader(new FileReader(datasetPath));
@@ -43,7 +47,7 @@ public class ClusterEvaluation {
 			n++;
 
 			elements.add(n);
-
+					
 			String iclass = instance.stringValue(aClass);
 			String icluster = instance.stringValue(aCluster);
 			HashSet<Integer> curr_classes = classes.get(iclass);
@@ -85,13 +89,15 @@ public class ClusterEvaluation {
 					+ cluster.getValue().size());
 
 		System.out.println();
+
 		// Tablita
+
 		System.out.print("Clase\t");
 		for (Entry<String, HashSet<Integer>> cluster : clusters.entrySet()){
 			System.out.print(cluster.getKey() + "\t");
 		}
 		System.out.println();
-		
+
 		for (Entry<String, HashSet<Integer>> cl : classes.entrySet()){
 			System.out.print(cl.getKey().substring(0, 3) + "\t");		
 			for (Entry<String, HashSet<Integer>> cluster : clusters.entrySet()){
@@ -100,8 +106,12 @@ public class ClusterEvaluation {
 			System.out.println();
 		}
 
-		
+
 	}
+
+	// Getters and Setters
+
+	// Methods
 
 	private int getIntersect(HashSet<Integer> a, HashSet<Integer> b) {
 		HashSet<Integer> clone = new HashSet<Integer>(a);
@@ -121,6 +131,11 @@ public class ClusterEvaluation {
 			p += max;
 		}
 		return p / n;
+	}
+
+	public String getInversePurity() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public double getPartitionCoefficient() {
@@ -262,7 +277,7 @@ public class ClusterEvaluation {
 			part2+= sumaClaseTomadoDeADos * sumaCluster;
 			sumaClase = 0.0;
 		}
-		
+
 		// part3
 
 		sumaClase = 0.0;
@@ -280,14 +295,14 @@ public class ClusterEvaluation {
 			sumaCluster += choose(icluster.size(),2).doubleValue();				
 		}
 		part3+= sumaCluster;
-		
-		
+
+
 		// ----
-		
+
 		System.out.println("Part 1 " + part1);
 		System.out.println("Part 2 " + part2);
 		System.out.println("Part 3 " + part3);
-				
+
 		ari = (part1 - (part2/choose(n,2).doubleValue())) / ((part3/2.0) - ((part2/choose(n,2).doubleValue())));
 
 		return ari;
@@ -301,24 +316,7 @@ public class ClusterEvaluation {
 		}
 
 		return ret;
-	}
-	
-	
-	public static void main(String[] args) throws Exception {
-		ClusterEvaluation evaluation = new ClusterEvaluation("resources\\Cluster.arff");
-
-		System.out.println();
-		System.out.println("Métricas---------------------------------------------------");
-		System.out.println();
-		
-		System.out.println("Entropy =\t\t[" + evaluation.getEntropy() + "]"); 						// Correcto anda bien
-		System.out.println("Purity =\t\t[" + evaluation.getPurity() + "]"); 						// Correcto anda bien
-		System.out.println("F-Measure =\t\t[" + evaluation.getFmeasure() + "]");					// Correcto anda bien
-		//System.out.println("Part. Coefficient =\t[" + evaluation.getPartitionCoefficient() + "]");// No interesa
-		System.out.println("Rand Index =\t\t[" + evaluation.getRandIndex() + "]");					// Correcto anda bien
-		System.out.println("Adjusted Rand Index =\t[" + evaluation.getAdjustedRandIndex() + "]");	// Correcto anda bien
 
 	}
 
 }
-

@@ -1,0 +1,21 @@
+@relation clusterinzacionResponsabilidades
+
+@attribute responsibility string
+@attribute component {realtor,client,system}
+
+@data
+'query MLS information',client
+'get driving direction',client
+'download appointment',client
+'download contact information',client
+'display clear property image',system
+'update new property listing in the MLS',client
+'create new property listing in the MLS',client
+'generate CMA report',realtor
+'call seller',system
+'call buyer',system
+'schedule appointment',system
+'notify new client appointments',system
+'retrieve map',realtor
+'notify realtor',system
+'save search result',client

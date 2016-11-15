@@ -16,5 +16,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/cascadeKMeans.jar"/>
+	<classpathentry kind="lib" path="lib/optics_dbScan.jar"/>
+	<classpathentry kind="lib" path="lib/SelfOrganizingMap.jar"/>
+	<classpathentry kind="lib" path="lib/weblaf-complete-1.29.jar"/>
+	<classpathentry kind="lib" path="lib/XMeans.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
+	<classpathentry kind="lib" path="lib/MTree.jar"/>
+	<classpathentry kind="lib" path="lib/elki-bundle-0.7.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

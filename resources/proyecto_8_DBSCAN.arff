@@ -1,0 +1,34 @@
+@relation clusterinzacionResponsabilidades
+
+@attribute Instance_number numeric
+@attribute responsibility string
+@attribute component {server,client,billing_system}
+@attribute Cluster {cluster_4,cluster_1,cluster_3,cluster_8,cluster_0,cluster_6,cluster_7,cluster_5,cluster_2}
+
+@data
+0,'search movie',client,cluster_4
+1,'display movie description',client,cluster_1
+2,'display movie actor',client,cluster_1
+3,'display movie director',client,cluster_1
+4,'request credit card payment',billing_system,cluster_3
+5,'authorize credit card payment',billing_system,cluster_3
+6,'stream movie',client,cluster_8
+7,'stream purchased movie',client,cluster_8
+8,'browse movie',client,cluster_4
+9,'view review',client,cluster_0
+10,'add own movie review',client,cluster_0
+11,'approve review',server,cluster_0
+12,'pay streaming movie',client,cluster_3
+13,'purchase prepaid credit card',client,cluster_3
+14,'update main page',client,cluster_6
+15,'show latest movie',client,cluster_4
+16,'update billing information',client,cluster_6
+17,'update contact information',client,cluster_6
+18,'distribute prepaid card',server,cluster_3
+19,'purchase streaming movie',client,cluster_3
+20,'support free trial period',client,cluster_7
+21,'log movie sales',server,cluster_5
+22,'store customer information',server,cluster_2
+23,'maintain customer information',server,cluster_2
+24,'log usage statistics',server,cluster_5
+25,'have free access',client,cluster_7
