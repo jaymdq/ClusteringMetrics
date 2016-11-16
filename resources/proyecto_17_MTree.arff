@@ -1,0 +1,27 @@
+@relation clusterinzacionResponsabilidades_clustered
+
+@attribute Instance_number numeric
+@attribute responsibility string
+@attribute component {server,client}
+@attribute Cluster {cluster_0,cluster_1,cluster_2}
+
+@data
+0,'register for course',client,cluster_0
+1,'view report cards',client,cluster_1
+2,'access system',client,cluster_2
+3,'access system',client,cluster_2
+4,'access system',client,cluster_2
+5,'access system',client,cluster_2
+6,'request course catalogue',client,cluster_0
+7,'make informed decision',server,cluster_1
+8,'select course offering',client,cluster_0
+9,'indicate alternative choice',client,cluster_1
+10,'change schedule',client,cluster_1
+11,'add course',client,cluster_0
+12,'drop course',client,cluster_0
+13,'send information',server,cluster_1
+14,'submit schedule',client,cluster_1
+15,'view electronic report card',client,cluster_1
+16,'record grade',client,cluster_1
+17,'teach course',server,cluster_0
+18,'see students signed up',client,cluster_1

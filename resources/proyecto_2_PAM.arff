@@ -1,0 +1,23 @@
+@relation clusterinzacionResponsabilidades
+
+@attribute Instance_number numeric
+@attribute responsibility string
+@attribute component {realtor,client,system}
+@attribute Cluster {cluster_1,cluster_2,cluster_0}
+
+@data
+0,'query MLS information',client,cluster_1
+1,'get driving direction',client,cluster_2
+2,'download appointment',client,cluster_2
+3,'download contact information',client,cluster_2
+4,'display clear property image',system,cluster_1
+5,'update new property listing in the MLS',client,cluster_1
+6,'create new property listing in the MLS',client,cluster_1
+7,'generate CMA report',realtor,cluster_1
+8,'call seller',system,cluster_0
+9,'call buyer',system,cluster_0
+10,'schedule appointment',system,cluster_2
+11,'notify new client appointments',system,cluster_1
+12,'retrieve map',realtor,cluster_1
+13,'notify realtor',system,cluster_1
+14,'save search result',client,cluster_1

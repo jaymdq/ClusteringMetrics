@@ -1,0 +1,26 @@
+@relation clusterinzacionResponsabilidades_clustered
+
+@attribute Instance_number numeric
+@attribute responsibility string
+@attribute component {vendor,system,verification_subsystem}
+@attribute Cluster {cluster_0,cluster_3,cluster_7,cluster_4,cluster_6,cluster_2,cluster_5,cluster_1}
+
+@data
+0,'verify invalid lead',vendor,cluster_0
+1,'submit credit validation record',vendor,cluster_3
+2,'supply lead data',system,cluster_7
+3,'supply score',system,cluster_4
+4,'validate lead',system,cluster_6
+5,'insert lead',system,cluster_2
+6,'process lead',system,cluster_5
+7,'set manual verification',system,cluster_1
+8,'compile contact information',system,cluster_4
+9,'compile academic scoring information',system,cluster_0
+10,'return lead',system,cluster_6
+11,'score part of the lead',system,cluster_4
+12,'verify users authentication',verification_subsystem,cluster_0
+13,'verify users rights',verification_subsystem,cluster_0
+14,'make parameter update',system,cluster_3
+15,'store lead',system,cluster_6
+16,'assign lead',system,cluster_6
+17,'receive period list',system,cluster_4
