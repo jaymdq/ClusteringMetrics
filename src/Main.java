@@ -13,7 +13,7 @@ public class Main {
 		ArrayList<ResponsibilitiesClusterer> clusterers = new ArrayList<ResponsibilitiesClusterer>();
 
 		// HierarchicalClusterer
-		ResponsibilitiesClusterer clusterer0 = new ResponsibilitiesClusterer("weka.clusterers.HierarchicalClusterer -N 2 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"",filterArguments,true);
+		ResponsibilitiesClusterer clusterer0 = new ResponsibilitiesClusterer("weka.clusterers.HierarchicalClusterer -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"",filterArguments,true);
 		clusterers.add(clusterer0);
 		
 		// Xmeans
@@ -21,16 +21,16 @@ public class Main {
 		clusterers.add(clusterer1);
 
 		// EM
-		ResponsibilitiesClusterer clusterer2 = new ResponsibilitiesClusterer("weka.clusterers.EM -I 100 -N -1 -X 10 -max -1 -ll-cv 1.0E-6 -ll-iter 1.0E-6 -M 1.0E-6 -K 10 -num-slots 1 -S 100",filterArguments,true);
+		ResponsibilitiesClusterer clusterer2 = new ResponsibilitiesClusterer("weka.clusterers.EM -I 100 -N 2 -X 10 -max -1 -ll-cv 1.0E-6 -ll-iter 1.0E-6 -M 1.0E-6 -K 10 -num-slots 1 -S 100",filterArguments,true);
 		clusterers.add(clusterer2);
 
 		// DBScan
 		ResponsibilitiesClusterer clusterer3 = new ResponsibilitiesClusterer("weka.clusterers.DBSCAN -E 0.9 -M 6 -A \"weka.core.EuclideanDistance -R first-last\"",filterArguments,true);
 		clusterers.add(clusterer3);
 
-		// CobWeb
+		// CobWeb MALOS RESULTADOS
 		ResponsibilitiesClusterer clusterer4 = new ResponsibilitiesClusterer("weka.clusterers.Cobweb -A 1.0 -C 0.0028209479177387815 -S 42",filterArguments,true);
-		clusterers.add(clusterer4);
+		//clusterers.add(clusterer4);
 
 		// PAM
 		ResponsibilitiesClusterer clusterer6 = new DummyResponsibilitiesClusterer("",filterArguments,true, "PAM");
@@ -54,7 +54,7 @@ public class Main {
 		int[] proyectos = {2,8,9,16,17};
 		for (ResponsibilitiesClusterer clusterer : clusterers){
 			for (int i = 0; i < proyectos.length; i++){
-				ClusterEvaluation evaluation = new ClusterEvaluation("resources\\proyecto_"+proyectos[i]+"_"+clusterer.getName()+".arff");
+				ClusterEvaluation evaluation = new ClusterEvaluation("resources\\proyecto_"+proyectos[i]+"_"+clusterer.getName()+"_1.arff");
 				
 				System.out.println("\n\nAlgoritmo : " + clusterer.getName());
 				System.out.println("Proyecto : " + proyectos[i]);

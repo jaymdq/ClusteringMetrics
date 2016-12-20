@@ -8,6 +8,10 @@ import java.util.Collections;
 import java.util.Vector;
 
 import de.lmu.ifi.dbs.elki.algorithm.clustering.DBSCAN;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.hierarchical.AnderbergHierarchicalClustering;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.hierarchical.LinkageMethod;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.hierarchical.PointerHierarchyRepresentationResult;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.hierarchical.SingleLinkageMethod;
 import de.lmu.ifi.dbs.elki.algorithm.clustering.kmeans.KMeansLloyd;
 import de.lmu.ifi.dbs.elki.algorithm.clustering.kmeans.KMedoidsPAM;
 import de.lmu.ifi.dbs.elki.algorithm.clustering.kmeans.initialization.FirstKInitialMeans;
@@ -214,7 +218,7 @@ public class ResponsibilitiesClusterer {
 					clusters.add(assignation[i]);
 				}
 			}
-			
+
 			for (int i = 0; i < clusters.size(); i++){
 				out += clusters.elementAt(i)+",";
 			}
@@ -234,12 +238,12 @@ public class ResponsibilitiesClusterer {
 
 	public void clusterization(String arffPath, Integer proyecto){
 
-		String output = arffPath + "\\proyecto_"+proyecto+"_" + getName() +".arff";
+		String output = arffPath + "\\proyecto_"+proyecto+"_" + getName() +"_1.arff";
 		String out = "";
 
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(arffPath+"\\clustering_"+proyecto+".arff"));
+			reader = new BufferedReader(new FileReader(arffPath+"\\clustering_"+proyecto+"_1.arff"));
 			ArffReader arff = new ArffReader(reader);
 			Instances data = arff.getData();		
 			data.setClassIndex(data.numAttributes() - 1);
@@ -337,7 +341,7 @@ public class ResponsibilitiesClusterer {
 					Double max = Collections.max(coeficientes);
 					int bestK = coeficientes.indexOf(max);
 					System.out.println("Best K " + bestK + "   " + coeficientes);
-
+					if (bestK == 1) bestK++;
 					KMedoidsPAM<NumberVector> pam = new KMedoidsPAM<NumberVector>(dist, bestK, 1000, init);
 					c = pam.run(db);
 
@@ -371,8 +375,6 @@ public class ResponsibilitiesClusterer {
 
 						// K-means should be used with squared Euclidean (least squares):
 						SquaredEuclideanDistanceFunction dist = SquaredEuclideanDistanceFunction.STATIC;
-						//RandomlyGeneratedInitialMeans init = new RandomlyGeneratedInitialMeans(RandomFactory.DEFAULT);
-						//KMedoidsInitialization<NumberVector> init = new PAMInitialMeans<NumberVector>();
 
 						// en estos casos se repite el proceso variando el k hasta que se maximize el coeficiente de siluete
 
@@ -397,6 +399,7 @@ public class ResponsibilitiesClusterer {
 						Double max = Collections.max(coeficientes);
 						int bestK = coeficientes.indexOf(max);
 						System.out.println("Best K : " + bestK + "   " + coeficientes);
+						if (bestK == 1) bestK++;
 
 						KMeansLloyd<NumberVector> kmeans = new KMeansLloyd<NumberVector>(dist, bestK, 100, new FirstKInitialMeans<>());
 						c = kmeans.run(db);
@@ -414,15 +417,56 @@ public class ResponsibilitiesClusterer {
 
 					}else{
 
-						// evaluate clusterer
-						//ClusterEvaluation eval = new ClusterEvaluation();
-						//eval.setClusterer(wekaClusterer);
-						//eval.evaluateClusterer(data);
+						/*// El hierarquichal hay que ver que k le va bien
+						if (getName().toLowerCase().equals("hierarchicalclusterer")){
 
-						// print results
-						//System.out.println(eval.clusterResultsToString());
+							Vector<Double> coeficientes = new Vector<Double>();
 
-						out = printResults("weka",data,wekaClusterer,null,0);
+							for (int k = 1; k < data.numInstances(); k++){
+
+								String[] options = this.wekaClusterer.getOptions();
+								for (int index = 0; index < options.length; index++){
+									if (options[index].equals("-N")){
+										options[index+1] = "" + k;
+										break;
+									}
+								}
+
+								// Se genera de nuevo el clusterizador
+								this.wekaClusterer.setOptions(options);
+								this.wekaClusterer.buildClusterer(dataClusterer);
+
+								// Evaluar coeficiente de siluete
+
+								ClusterEvaluation silEval = new ClusterEvaluation();
+
+								Double coeficienteSil = silEval.calculateCoefficient();;
+								coeficienteSil /= data.numInstances();
+								if (coeficienteSil.isNaN())
+									coeficientes.add(-1.0);
+								else
+									coeficientes.add(coeficienteSil);
+							}
+
+							Double max = Collections.max(coeficientes);
+							int bestK = coeficientes.indexOf(max);
+							System.out.println("Best K : " + bestK + "   " + coeficientes);
+
+							String[] options = this.wekaClusterer.getOptions();
+							for (int index = 0; index < options.length; index++){
+								if (options[index].equals("-N")){
+									options[index+1] = "" + bestK;
+									break;
+								}
+							}
+
+							// Se genera de nuevo el clusterizador
+							this.wekaClusterer.setOptions(options);
+							this.wekaClusterer.buildClusterer(dataClusterer);
+
+						}else*/
+
+							out = printResults("weka",data,wekaClusterer,null,0);
 					}
 				}
 			}
