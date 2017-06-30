@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,6 +35,7 @@ import de.lmu.ifi.dbs.elki.datasource.DatabaseConnection;
 import de.lmu.ifi.dbs.elki.distance.distancefunction.minkowski.SquaredEuclideanDistanceFunction;
 import de.lmu.ifi.dbs.elki.evaluation.clustering.internal.EvaluateSimplifiedSilhouette;
 import de.lmu.ifi.dbs.elki.evaluation.clustering.internal.NoiseHandling;
+import input.InputReader;
 import weka.clusterers.AbstractClusterer;
 import weka.clusterers.FilteredClusterer;
 import weka.core.Instance;
@@ -236,7 +238,7 @@ public class ResponsibilitiesClusterer {
 		return out;
 	}
 
-	public void clusterization(String arffPath, Integer proyecto){
+	public void performSimpleClustering(String arffPath, Integer proyecto, Boolean complex){
 
 		String output = arffPath + "\\proyecto_"+proyecto+"_" + getName() +"_1.arff";
 		String out = "";
@@ -255,6 +257,11 @@ public class ResponsibilitiesClusterer {
 			filter.setInputFormat(data);
 			Instances dataClusterer = Filter.useFilter(data, filter);
 
+			// Acá si es complejo el tratamiento, se cambian las responsabilidades
+			InputReader inputReader = new InputReader();
+			//inputReader.readResponisibilitiesFromARFF(basePath, fileName)
+			
+			
 			// Se genera el clusterer
 			if (this.wekaClusterer != null)
 				this.wekaClusterer.buildClusterer(dataClusterer);
@@ -474,7 +481,6 @@ public class ResponsibilitiesClusterer {
 			e.printStackTrace();
 		}
 
-		//System.out.println(out);
 
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(output));
@@ -485,4 +491,5 @@ public class ResponsibilitiesClusterer {
 		}
 
 	}
+	
 }

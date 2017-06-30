@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Main {
+public class Main_Paper_UCM {
 	
 	// Main Method
 
@@ -28,10 +28,6 @@ public class Main {
 		ResponsibilitiesClusterer clusterer3 = new ResponsibilitiesClusterer("weka.clusterers.DBSCAN -E 0.9 -M 6 -A \"weka.core.EuclideanDistance -R first-last\"",filterArguments,true);
 		clusterers.add(clusterer3);
 
-		// CobWeb MALOS RESULTADOS
-		//ResponsibilitiesClusterer clusterer4 = new ResponsibilitiesClusterer("weka.clusterers.Cobweb -A 1.0 -C 0.0028209479177387815 -S 42",filterArguments,true);
-		//clusterers.add(clusterer4);
-
 		// PAM
 		ResponsibilitiesClusterer clusterer4 = new DummyResponsibilitiesClusterer("", filterArguments, true, "PAM");
 		clusterers.add(clusterer4);
@@ -40,19 +36,34 @@ public class Main {
 		ResponsibilitiesClusterer clusterer5 = new DummyResponsibilitiesClusterer("", filterArguments, true, "KMeans");
 		clusterers.add(clusterer5);
 
+		Boolean simplified = true;
+		
 		// Se genera los archivos tipo proyecto, que son las responsabilidades, junto a su clase, y el componente asignado
 		// Los archivos tipo proyecto sirven para calcular las metricas
-
-		/*for (ResponsibilitiesClusterer clusterer : clusterers){
-			clusterer.clusterization("resources", 2);
-			clusterer.clusterization("resources", 8);
+	
+		for (ResponsibilitiesClusterer clusterer : clusterers){
+			clusterer.performSimpleClustering("resources", 2);
+			clusterer.performComplexClustering("resources", 2);
+			
+			/*
+			 * En un futuro usar los 17 proyectos!!
+			for (int i = 1; i < 18 ; i++){
+				clusterer.clusterization("resources", i);
+			}			
+			*/
+			
+			/*clusterer.clusterization("resources", 8);
 			clusterer.clusterization("resources", 9);
 			clusterer.clusterization("resources", 16);
 			clusterer.clusterization("resources", 17);
-		}		*/
+			*/
+		}		
 
 		// Esto era para el caso anterior
 		//int[] proyectos = {2,8,9,16,17};
+		
+		//TODO dejar preparado para que el texto que se genere pueda ser facilmente copiado y pegado a un excel
+		
 		int[] proyectos = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17};
 		for (ResponsibilitiesClusterer clusterer : clusterers){
 			for (int i = 0; i < proyectos.length; i++){
