@@ -17,7 +17,7 @@ public class ClusteringProcedureTester {
 		// Responsibilities
 
 		InputReader input = new InputReader();
-		ArrayList<Responsibility> responsibilities = input.readResponisibilitiesFromARFF("D:\\Isistan\\SVN\\papers\\Paper Lomagno\\casos de estudio\\4 Experimento Agrupación de Responsabilidades\\Proyectos", "experimento_4_proyecto_2.arff", true);
+		ArrayList<Responsibility> responsibilities = input.readResponisibilitiesFromARFF("D:\\Isistan\\SVN\\papers\\Paper Lomagno\\casos de estudio\\4 Experimento Agrupación de Responsabilidades\\Proyectos", "experimento_4_proyecto_2.arff");
 
 		System.out.println("Responsabilidades");
 

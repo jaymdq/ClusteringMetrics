@@ -36,6 +36,7 @@ import de.lmu.ifi.dbs.elki.distance.distancefunction.minkowski.SquaredEuclideanD
 import de.lmu.ifi.dbs.elki.evaluation.clustering.internal.EvaluateSimplifiedSilhouette;
 import de.lmu.ifi.dbs.elki.evaluation.clustering.internal.NoiseHandling;
 import input.InputReader;
+import model.responsibility.Responsibility;
 import weka.clusterers.AbstractClusterer;
 import weka.clusterers.FilteredClusterer;
 import weka.core.Instance;
@@ -44,6 +45,7 @@ import weka.core.converters.ArffLoader.ArffReader;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.attribute.StringToWordVector;
+import wordnet.SynonymsOverResponsibilities;
 
 public class ResponsibilitiesClusterer {
 
@@ -238,17 +240,47 @@ public class ResponsibilitiesClusterer {
 		return out;
 	}
 
-	public void performSimpleClustering(String arffPath, Integer proyecto, Boolean complex){
+	public void performClustering(String arffPath, Integer proyecto, Boolean complexClustering){
 
-		String output = arffPath + "\\proyecto_"+proyecto+"_" + getName() +"_1.arff";
-		String out = "";
+		String input = arffPath + File.separator + "experimento_4_proyecto_" + proyecto + ".arff";
+		String output = arffPath + File.separator + "resultados" + File.separator +"experimento_4_proyecto_" + proyecto +"_" + getName() +".arff";
+		if (complexClustering)
+			output = output.replaceFirst("\\.arff", "_WSD.arff");
+		String outArffTxt = "";
 
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(arffPath+"\\clustering_"+proyecto+"_1.arff"));
+			reader = new BufferedReader(new FileReader(input));
 			ArffReader arff = new ArffReader(reader);
 			Instances data = arff.getData();		
 			data.setClassIndex(data.numAttributes() - 1);
+
+			// Acá si es complejo el tratamiento, se cambian las responsabilidades
+
+
+			// tengo que llevar a cabo el WSD
+			// y reescribir el Instances con los nuevos valores
+
+			// (1) Leemos el archivo arff
+
+			InputReader inputReader = new InputReader();
+			ArrayList<Responsibility> responsibilitiesFromArff = inputReader.readResponisibilitiesFromARFF(arffPath, "experimento_4_proyecto_" + proyecto + ".arff");
+
+			SynonymsOverResponsibilities searcherSynonyms = new SynonymsOverResponsibilities();
+			ArrayList<Responsibility> newResponsibilities = responsibilitiesFromArff;
+			if (complexClustering){
+				newResponsibilities = searcherSynonyms.performWSDOverResponsibilities(responsibilitiesFromArff);
+				System.out.println("Número de cambios hechos en WSD: ["+ searcherSynonyms.getNumberOfChanges() +"]");
+			}
+						
+			// Pasarlo al Instances
+
+			for (int i = 0; i < data.size(); i++){
+				Instance instance = data.get(i);
+
+				instance.setValue(0, newResponsibilities.get(i).getCompleteResponsibility());
+				System.out.println(instance.stringValue(0));
+			}
 
 			// generate data for clusterer (w/o class)
 
@@ -257,11 +289,6 @@ public class ResponsibilitiesClusterer {
 			filter.setInputFormat(data);
 			Instances dataClusterer = Filter.useFilter(data, filter);
 
-			// Acá si es complejo el tratamiento, se cambian las responsabilidades
-			InputReader inputReader = new InputReader();
-			//inputReader.readResponisibilitiesFromARFF(basePath, fileName)
-			
-			
 			// Se genera el clusterer
 			if (this.wekaClusterer != null)
 				this.wekaClusterer.buildClusterer(dataClusterer);
@@ -302,7 +329,7 @@ public class ResponsibilitiesClusterer {
 						clusters.add(assignation[i]);
 				}
 
-				out = printResults("dbscan",data,wekaClusterer,assignation,clusters.size());
+				outArffTxt = printResults("dbscan",data,wekaClusterer,assignation,clusters.size());
 
 			}else{
 				if (getName().toLowerCase().equals("pam")){
@@ -360,7 +387,7 @@ public class ResponsibilitiesClusterer {
 							clusters.add(assignation[i]);
 					}
 
-					out = printResults("pam",data,wekaClusterer,assignation,clusters.size());
+					outArffTxt = printResults("pam",data,wekaClusterer,assignation,clusters.size());
 
 				}else{
 					if (getName().toLowerCase().equals("kmeans")){
@@ -419,7 +446,7 @@ public class ResponsibilitiesClusterer {
 								clusters.add(assignation[i]);
 						}
 
-						out = printResults("kmeans",data,wekaClusterer,assignation,clusters.size());
+						outArffTxt = printResults("kmeans",data,wekaClusterer,assignation,clusters.size());
 
 
 					}else{
@@ -473,7 +500,7 @@ public class ResponsibilitiesClusterer {
 
 						}else*/
 
-							out = printResults("weka",data,wekaClusterer,null,0);
+						outArffTxt = printResults("weka",data,wekaClusterer,null,0);
 					}
 				}
 			}
@@ -484,12 +511,12 @@ public class ResponsibilitiesClusterer {
 
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(output));
-			writer.write(out);
+			writer.write(outArffTxt);
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
 }

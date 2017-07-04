@@ -11,18 +11,25 @@ import weka.core.stemmers.Stemmer;
 public class SynonymsOverResponsibilities {
 
 	// Variables
+	private static Integer numberOfChanges;
 	
 	// Constructors
 	
 	public SynonymsOverResponsibilities(){
-		
+		numberOfChanges = 0;
 	}
 	
 	// Getters and Setters
 	
+	public static Integer getNumberOfChanges(){
+		return numberOfChanges;
+	}
+	
 	// Methods
 	
 	public ArrayList<Responsibility> performWSDOverResponsibilities(ArrayList<Responsibility> responsibilities){
+		
+		numberOfChanges = 0;
 		
 		System.out.println("Responsabilidades");
 
@@ -358,6 +365,7 @@ public class SynonymsOverResponsibilities {
 				newRecognition.setPair1(change.get(recognition.getPair1()));
 				newRecognition.setPair2(recognition.getPair2());
 				newRecognitions.add(newRecognition);
+				addConvertion();
 
 			}else{
 				newRecognitions.add(recognition);
@@ -369,6 +377,8 @@ public class SynonymsOverResponsibilities {
 		return newResponsibility;
 	}
 
-	
+	private static void addConvertion(){
+		numberOfChanges++;
+	}
 	
 }
