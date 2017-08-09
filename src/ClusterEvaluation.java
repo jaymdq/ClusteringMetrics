@@ -47,7 +47,7 @@ public class ClusterEvaluation {
 			n++;
 
 			elements.add(n);
-					
+
 			String iclass = instance.stringValue(aClass);
 			String icluster = instance.stringValue(aCluster);
 			HashSet<Integer> curr_classes = classes.get(iclass);
@@ -71,7 +71,7 @@ public class ClusterEvaluation {
 		}
 
 		// Obtenido
-		System.out.println("--------Clusters--------");
+		/*System.out.println("--------Clusters--------");
 		for (Entry<String, HashSet<Integer>> cluster : clusters.entrySet())
 			System.out.println("\t" + cluster.getKey() + ": "
 					+ cluster.getValue().size());
@@ -105,7 +105,7 @@ public class ClusterEvaluation {
 			}
 			System.out.println();
 		}
-
+		 */
 
 	}
 

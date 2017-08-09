@@ -41,31 +41,45 @@ public class Main_Paper_UCM {
 		// Los archivos tipo proyecto sirven para calcular las metricas
 
 		String arffPath = "D:\\Isistan\\SVN\\papers\\Paper Lomagno\\casos de estudio\\4 Experimento Agrupación de Responsabilidades\\Proyectos";
-		int[] proyectos = {1, 2, 3, 4, 5};
+		int[] proyectos = {1,2};
 
 		for (ResponsibilitiesClusterer clusterer : clusterers){
 			for (int i = 0; i < proyectos.length; i++){
-				clusterer.performClustering(arffPath, proyectos[i], false);
-				clusterer.performClustering(arffPath, proyectos[i], true);
+				// Los que genera la aplicación
+				//clusterer.performClustering(arffPath, proyectos[i], false,"");
+				//clusterer.performClustering(arffPath, proyectos[i], true,"");
+				
+				// Completos a mano
+				clusterer.performClustering(arffPath, proyectos[i], false,"_completo");
+				clusterer.performClustering(arffPath, proyectos[i], true,"_completo");
 			}
 		}		
 
 		// Esto era para el caso anterior
 		//int[] proyectos = {2,8,9,16,17};
+		System.out.println("\n\n\n\n\n\n\n\n ################################################################################################### \n\n");
 
-		//TODO dejar preparado para que el texto que se genere pueda ser facilmente copiado y pegado a un excel
+		ArrayList<String> toSearches = new ArrayList<String>();
+		//toSearches.add("");
+		//toSearches.add("_WSD");
+		toSearches.add("_completo");
+		toSearches.add("_completo_WSD");
+		
+		
 		for (ResponsibilitiesClusterer clusterer : clusterers){
 			for (int i = 0; i < proyectos.length; i++){
-				String toSearch = arffPath + File.separator + "resultados" + File.separator + "experimento_4_proyecto_" + proyectos[i] + "_" + clusterer.getName() + ".arff";
+				for (String sss : toSearches){
+								
+				String toSearch = arffPath + File.separator + "resultados" + File.separator + "experimento_4_proyecto_" + proyectos[i] + "_" + clusterer.getName() + sss +".arff";
 
-				// TODO con WSD :P
-
+				System.out.println(toSearch);
+				
 				ClusterEvaluation evaluation = new ClusterEvaluation(toSearch);
 
 				System.out.println("\n\nAlgoritmo : " + clusterer.getName());
 				System.out.println("Proyecto : " + proyectos[i]);
 				System.out.println("Métricas---------------------------------------------------");
-				System.out.println();
+				/*System.out.println();
 
 				System.out.println("Entropy =\t\t[" + evaluation.getEntropy() + "]"); 						// Correcto anda bien
 				System.out.println("Purity =\t\t[" + evaluation.getPurity() + "]"); 						// Correcto anda bien
@@ -73,7 +87,12 @@ public class Main_Paper_UCM {
 				System.out.println("Rand Index =\t\t[" + evaluation.getRandIndex() + "]");					// Correcto anda bien
 				System.out.println("Adjusted Rand Index =\t[" + evaluation.getAdjustedRandIndex() + "]");	// Correcto anda bien
 
-				System.out.println();
+				System.out.println();*/
+				
+				System.out.println(evaluation.getEntropy() + "\t" + evaluation.getPurity() + "\t" +evaluation.getFmeasure() + "\t" +evaluation.getAdjustedRandIndex());
+				
+				System.out.println("\n#########################################################################\n");
+				}
 			}			
 		}
 

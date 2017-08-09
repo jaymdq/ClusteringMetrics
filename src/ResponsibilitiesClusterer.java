@@ -240,10 +240,10 @@ public class ResponsibilitiesClusterer {
 		return out;
 	}
 
-	public void performClustering(String arffPath, Integer proyecto, Boolean complexClustering){
+	public void performClustering(String arffPath, Integer proyecto, Boolean complexClustering, String completo){
 
-		String input = arffPath + File.separator + "experimento_4_proyecto_" + proyecto + ".arff";
-		String output = arffPath + File.separator + "resultados" + File.separator +"experimento_4_proyecto_" + proyecto +"_" + getName() +".arff";
+		String input = arffPath + File.separator + "experimento_4_proyecto_" + proyecto + completo + ".arff";
+		String output = arffPath + File.separator + "resultados" + File.separator +"experimento_4_proyecto_" + proyecto +"_" + getName() + completo + ".arff";
 		if (complexClustering)
 			output = output.replaceFirst("\\.arff", "_WSD.arff");
 		String outArffTxt = "";
@@ -264,7 +264,7 @@ public class ResponsibilitiesClusterer {
 			// (1) Leemos el archivo arff
 
 			InputReader inputReader = new InputReader();
-			ArrayList<Responsibility> responsibilitiesFromArff = inputReader.readResponisibilitiesFromARFF(arffPath, "experimento_4_proyecto_" + proyecto + ".arff");
+			ArrayList<Responsibility> responsibilitiesFromArff = inputReader.readResponisibilitiesFromARFF(arffPath, "experimento_4_proyecto_" + proyecto + completo +".arff");
 
 			SynonymsOverResponsibilities searcherSynonyms = new SynonymsOverResponsibilities();
 			ArrayList<Responsibility> newResponsibilities = responsibilitiesFromArff;
